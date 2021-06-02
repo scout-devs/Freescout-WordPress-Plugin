@@ -1,0 +1,68 @@
+.fsc_container{
+    background:#fff;
+    width:100%;
+    margin-top:20px;
+}
+.fsc_container_inner{
+    padding:20px;
+}
+
+#conversationsTable thead th{
+    text-align:left;
+}
+#conversationsTable tbody  tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+#conversationsTable tbody td.border{
+    border-top:1px solid #f0f0f1;
+}
+#conversationsTable thead th,#conversationsTable thead td {
+     border-bottom: 1px solid #c3c4c7; 
+}
+#conversationsTable.no-footer {
+    border-bottom: 1px solid #c3c4c7;
+}
+#conversationsTable thead th, #conversationsTable tfoot th {
+     font-weight: 300;
+}
+div#conversationsTable_filter {
+    margin-bottom: 19px;
+}
+
+/***settings css***/
+.settingsTable textarea{
+    background-color: #eee;
+    opacity: 1;
+    overflow: auto;  
+    width: 533px;
+    height: 131px; 
+}
+.settingsTable select, .settingsTable input[type=text] {
+    width: 100%;
+    max-width: 100%;
+}
+.settingsTable td {
+    padding: 20px;
+}
+.settingsTable p{
+    margin:0;
+}
+
+.eup_shortcode .eup_inner{
+    width:31%  !important;
+    display:inline-block;;
+}
+#adminmenu .wp-menu-image img {
+    padding: 5px 0 0 0;
+    opacity: .6;
+}
+/*alerts css*/
+.fl-alert{
+    padding:10px;
+    font-weight:bold;
+    margin:10px 0px;
+}
+.fl-alert-danger{
+    color:red;
+    border:1px solid red;
+}
