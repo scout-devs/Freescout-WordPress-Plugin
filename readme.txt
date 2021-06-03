@@ -12,3 +12,5 @@ Integrates Freescout features with WordPress
 
 == Description ==
 Integrates Freescout features with WordPress
+
+This plugin used third party services via https://freescout.net software. 
