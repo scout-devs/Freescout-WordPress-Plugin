@@ -1,33 +1,43 @@
 <?php
 ///////////////SAVE DATA ON SUBMIT///////////////////
-if(!empty($_POST['submitFscSettingsForm']) && isset($_POST['submitFscSettingsForm'])){
+add_action('init', 'fsc_save_settings');
 
-	if(@$_POST['fsc_enabled']){
-		update_option('fsc_enabled',1);
-	}else{
-		delete_option('fsc_enabled');
+function fsc_save_settings(){
+	if(!empty($_POST['submitFscSettingsForm']) && isset($_POST['submitFscSettingsForm'])){
+
+		//check for nonce
+		$retrieved_nonce = $_REQUEST['_wpnonce'];
+		if (!wp_verify_nonce($retrieved_nonce, 'fsc_settings_nonce' ) ) die( 'Failed security check' );
+		//
+	
+		//save settings
+		if(@$_POST['fsc_enabled']){
+			update_option('fsc_enabled',1);
+		}else{
+			delete_option('fsc_enabled');
+		}
+	
+		update_option('fsc_widget_code',$_POST['fsc_widget_code']);
+		update_option('fsc_mailbox',sanitize_text_field($_POST['fsc_mailbox']));
+		
+		//API Setitngs	
+		update_option('fsc_portal_url',sanitize_text_field($_POST['fsc_portal_url']));
+		update_option('fsc_api_key',sanitize_text_field($_POST['fsc_api_key']));
+		
+	
+		//option for EUP shorcode
+		update_option('fsc_eup_id',sanitize_text_field($_POST['fsc_eup_id']));
+		update_option('fsc_eup_width',sanitize_text_field($_POST['fsc_eup_width']));
+		update_option('fsc_eup_height',sanitize_text_field($_POST['fsc_eup_height']));
+		
+		update_option('fsc_kb_width',sanitize_text_field($_POST['fsc_kb_width']));
+		update_option('fsc_kb_height',sanitize_text_field($_POST['fsc_kb_height']));
 	}
-
-	update_option('fsc_widget_code',$_POST['fsc_widget_code']);
-	update_option('fsc_mailbox',$_POST['fsc_mailbox']);
-	
-	//API Setitngs	
-	update_option('fsc_portal_url',$_POST['fsc_portal_url']);
-	update_option('fsc_api_key',$_POST['fsc_api_key']);
-	
-
-	//option for EUP shorcode
-	update_option('fsc_eup_id',$_POST['fsc_eup_id']);
-	update_option('fsc_eup_width',$_POST['fsc_eup_width']);
-	update_option('fsc_eup_height',$_POST['fsc_eup_height']);
-	
-	update_option('fsc_kb_width',$_POST['fsc_kb_width']);
-	update_option('fsc_kb_height',$_POST['fsc_kb_height']);
 }
 
 //display admin menu
-add_action('admin_menu', 'my_menu_pages');
-function my_menu_pages(){
+add_action('admin_menu', 'fsc_admin_menu');
+function fsc_admin_menu(){
     add_menu_page('Freescout', 'Freescout', 'manage_options', 'fsc-conversations', 'fsc_conversations',FSC_PLUGIN_URL."/img/freescout.png");
     add_submenu_page('fsc-conversations', 'Conversations', 'Conversations', 'manage_options', 'fsc-conversations' );
     add_submenu_page('fsc-conversations', 'Settings', 'Settings', 'manage_options', 'fsc-settings','fsc_settings' );
@@ -159,6 +169,7 @@ function fsc_settings(){
 				<hr/>	
 				<table class="settingsTable">
 					<form method="post" action="" id="settingsForm">	
+					<?php wp_nonce_field('fsc_settings_nonce'); ?>
 					<tr>
 						<td>Enable Widget</td>
 						<td><input type="checkbox" name="fsc_enabled" id="fsc_enabled" value="1" <?php if($fsc_enabled==1) { echo "checked"; } ?>></td>
@@ -167,7 +178,7 @@ function fsc_settings(){
 					
 					<tr>
 						<td>Widget JS</td>
-						<td><textarea  rows=10 cols=70 class="widefat textarea" name="fsc_widget_code" id="fsc_widget_code" ><?php echo $fsc_widget_code; ?></textarea></td>
+						<td><textarea  rows=10 cols=70 class="widefat textarea" name="fsc_widget_code" id="fsc_widget_code" ><?php echo stripslashes($fsc_widget_code); ?></textarea></td>
 					</tr>
 
 					<tr>

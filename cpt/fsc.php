@@ -30,7 +30,6 @@ if ( ! function_exists('fsc_conversations_cpt') ) {
 			'show_in_menu'		  => 'admin.php?page=fsc_conversations_cpt',	
 			'show_in_admin_bar'   => false,
 			'menu_position'       => 5,
-			'menu_icon'           => plugins_url() . "/img/contact.png",
 			'can_export'          => true,
 			'has_archive'         => true,
 			'exclude_from_search' => true,

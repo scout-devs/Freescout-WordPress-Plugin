@@ -6,7 +6,6 @@
 * Author: ExpressTech
 * Text Domain: freescout
 */
-
 define('FSC_VERSION', '1.0.0');
 // Paths
 define('FSC_PATH', plugin_dir_path( __FILE__ ));
@@ -26,7 +25,7 @@ require_once( 'inc/admin.php' );
 ///////////////////////////////////////////////////////////////////////////////
 // Languages
 function fsc_plugin_setup() {
-	load_plugin_textdomain('freescout-contact', false, dirname(plugin_basename(__FILE__)) . '/languages/');
+	load_plugin_textdomain('freescout', false, dirname(plugin_basename(__FILE__)) . '/languages/');
 } 
 add_action('plugins_loaded', 'fsc_plugin_setup');
 
@@ -38,7 +37,7 @@ function fsc_enqueue_scripts() {
 	if (is_admin()) {
 		wp_register_script( 
 			'fsc_datatables',
-			'https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js',
+			FSC_PLUGIN_URL.'/assets/admin/jquery.dataTables.min.js',
 			array('jquery'),
 			FSC_VERSION,
 			TRUE
@@ -47,7 +46,7 @@ function fsc_enqueue_scripts() {
 
 		wp_register_style( 
 			'fsc_datatables_styles', 
-			'https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css',
+			FSC_PLUGIN_URL.'/assets/admin/jquery.dataTables.min.css',
 			array(), 
 			FSC_VERSION, 
 			'all' 
@@ -75,6 +74,7 @@ function fsc_enqueue_scripts() {
 add_action('init', 'fsc_enqueue_scripts');
 
 //plugin activation hook
+
 register_activation_hook( __FILE__, 'fsc_plugin_activate' );
 function fsc_plugin_activate(){
 	update_option('fsc_enabled',1);

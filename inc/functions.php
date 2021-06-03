@@ -165,7 +165,7 @@ function fsc_display_widget()
 }
 
 /**************************************************************/
-/*********************CURL FUNCTIONS***************************/
+/*********************WPI REST API FUNCTION***************************/
 /**************************************************************/
 function httpGet($endpoint,$data=array())
 {
@@ -181,61 +181,6 @@ function httpGet($endpoint,$data=array())
 
     $url = $base_url.$endpoint.'?'.$params;
 
-
-    $ch = curl_init();  
- 
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-//  curl_setopt($ch,CURLOPT_HEADER, false); 
- 
-    // Execute the cURL request for a maximum of 500 seconds
-    curl_setopt($ch, CURLOPT_TIMEOUT, 500);
-
-    // Do not check the SSL certificates
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-    $output=curl_exec($ch);
- 
-    curl_close($ch);
-    return $output;
-}
-
-function httpPost($endpoint,$params)
-{
-
-   $base_url = get_option('fsc_portal_url'); 
-   $api_key = get_option('fsc_api_key'); 
-
-   $url = $base_url.$endpoint.'?api_key='.$api_key;
-
-    $postData = '';
-   //create name value pairs seperated by &
-   foreach($params as $k => $v) 
-   { 
-      $postData .= $k . '='.$v.'&'; 
-   }
-   $postData = rtrim($postData, '&');
- 
-    $ch = curl_init();  
- 
-    curl_setopt($ch,CURLOPT_URL,$url);
-    curl_setopt($ch,CURLOPT_RETURNTRANSFER,true);
-    curl_setopt($ch,CURLOPT_HEADER, false); 
-    curl_setopt($ch, CURLOPT_POST, count($postData));
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);    
- 
-
-    // Execute the cURL request for a maximum of 500 seconds
-    curl_setopt($ch, CURLOPT_TIMEOUT, 500);
-
-    // Do not check the SSL certificates
-    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-
-    $output=curl_exec($ch);
- 
-    curl_close($ch);
-    return $output;
+    $response = wp_remote_get($url);   //wp rest api
+    return $response['body'];
 }
