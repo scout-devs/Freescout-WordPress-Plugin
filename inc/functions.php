@@ -1,6 +1,6 @@
 <?php
 //get stored conversations
-function getConversations(){
+function fsc_getConversations(){
     $args = array( 
         'numberposts'		=> -1, // -1 is for all
         'post_type'		=> 'fsc_conversations', // or 'post', 'page'
@@ -14,29 +14,29 @@ function getConversations(){
 }
 
 //get api conversations
-function getConversationsApi($data=array()){
+function fsc_getConversationsApi($data=array()){
     $endpoint = 'api/conversations';
-    $conversations = httpGet($endpoint,$data);
+    $conversations = fsc_httpGet($endpoint,$data);
     return json_decode($conversations,true);
 }
 
 //get api mailboxes list
-function getMailBoxesApi($data=array()){
+function fsc_getMailBoxesApi($data=array()){
     $endpoint = 'api/mailboxes';
-    $conversations = httpGet($endpoint,$data);
+    $conversations = fsc_httpGet($endpoint,$data);
     return json_decode($conversations,true);
 }
 //get api mailboxe custom fields
-function getMailBoxeFieldsApi($mailbox_id=0){ 
+function fsc_getMailBoxeFieldsApi($mailbox_id=0){ 
     $endpoint = 'api/mailboxes/'.$mailbox_id.'/custom_fields';
-    $fields = httpGet($endpoint);
+    $fields = fsc_httpGet($endpoint);
     return json_decode($fields,true);
 }
 
 
 //ajax function for sync conversations
-add_action('wp_ajax_sync_conversatioins', 'ajax_sync_conversatioins');
-function ajax_sync_conversatioins(){
+add_action('wp_ajax_fsc_sync_conversatioins', 'fsc_ajax_sync_conversatioins');
+function fsc_ajax_sync_conversatioins(){
     global $wpdb;
 
     // delete all posts by post type.
@@ -61,7 +61,7 @@ function ajax_sync_conversatioins(){
 		"mailboxId"=>$fsc_mailbox
 	);
 
-	$conversations = getConversationsApi($data);
+	$conversations = fsc_getConversationsApi($data);
 
     if(!empty($conversations['_embedded']['conversations'])){
         foreach($conversations['_embedded']['conversations'] as $con){
@@ -167,7 +167,7 @@ function fsc_display_widget()
 /**************************************************************/
 /*********************WPI REST API FUNCTION***************************/
 /**************************************************************/
-function httpGet($endpoint,$data=array())
+function fsc_httpGet($endpoint,$data=array())
 {
     $base_url = get_option('fsc_portal_url');
 

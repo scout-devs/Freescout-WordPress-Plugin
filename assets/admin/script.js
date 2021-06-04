@@ -29,7 +29,7 @@ function syncConversatioins(btnObj){
 	jQuery.ajax({ 
 		type: "POST",
 		url: fsc_script_ajax_object.ajax_url,
-		data: { action: 'sync_conversatioins'},
+		data: { action: 'fsc_sync_conversatioins'},
 		success:function(response){
 			alert(response.message);
 			if(response.error == true){
