@@ -17,7 +17,7 @@ function fsc_save_settings(){
 			delete_option('fsc_enabled');
 		}
 	
-		update_option('fsc_widget_code',$_POST['fsc_widget_code']);
+		update_option('fsc_widget_code',sanitize_text_field(htmlentities($_POST['fsc_widget_code'])));
 		update_option('fsc_mailbox',sanitize_text_field($_POST['fsc_mailbox']));
 		
 		//API Setitngs	
@@ -69,7 +69,7 @@ function fsc_conversations(){
 	);
 	$conversations = getConversationsApi($data);
 	*/
-	$conversations = getConversations();
+	$conversations = fsc_getConversations();
 
 	//sorting
 	?>
@@ -154,7 +154,7 @@ function fsc_settings(){
 		$fsc_kb_height = get_option('fsc_kb_height');	
 		
 		//get mailboxes list from api
-		$mailboxes = getMailBoxesApi();
+		$mailboxes = fsc_getMailBoxesApi();
 		//$mailboxesFields = getMailBoxeFieldsApi($fsc_mailbox);
 
 		?>
