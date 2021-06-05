@@ -2,11 +2,11 @@
 /**
 * Plugin Name: Freescout
 * Description: Integrates Freescout features with WordPress
-* Version: 1.0.0
+* Version: 1.0.1
 * Author: ExpressTech
 * Text Domain: freescout
 */
-define('FSC_VERSION', '1.0.0');
+define('FSC_VERSION', '1.0.1');
 // Paths
 define('FSC_PATH', plugin_dir_path( __FILE__ ));
 define('FSC_DIRNAME', basename( plugin_basename( FSC_PATH ) ));
