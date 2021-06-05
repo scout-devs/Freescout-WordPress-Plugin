@@ -160,7 +160,7 @@ function fsc_display_widget()
     $fsc_widget_code = get_option('fsc_widget_code');
 
     if($fsc_enabled){
-        echo $fsc_widget_code;
+        echo html_entity_decode(stripslashes($fsc_widget_code));
     }
 }
 
