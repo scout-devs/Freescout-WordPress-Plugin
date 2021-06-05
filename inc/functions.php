@@ -182,5 +182,10 @@ function fsc_httpGet($endpoint,$data=array())
     $url = $base_url.$endpoint.'?'.$params;
 
     $response = wp_remote_get($url);   //wp rest api
+
+    if(!empty($response->errors)){
+        return;
+    }
+  
     return $response['body'];
 }
